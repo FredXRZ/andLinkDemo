@@ -4,11 +4,13 @@ import Vue from 'vue'
 import { Button, Table, TableColumn} from 'element-ui';
 import App from './App'
 import router from './router'
+// 引入echarts
+import echarts from 'echarts'
 
+Vue.prototype.$echarts = echarts 
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-
 Vue.use(Button)
 Vue.use(Table)
 Vue.use(TableColumn)
