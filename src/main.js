@@ -6,13 +6,17 @@ import {
   Table, 
   TableColumn,
   Upload,
-  Row
+  Row,
+  Select,
+  Option
 } from 'element-ui';
 import App from './App'
 import router from './router'
 // 引入echarts
 import echarts from 'echarts'
+import axios from 'axios'
 
+Vue.prototype.axios = axios
 Vue.prototype.$echarts = echarts 
 Vue.config.productionTip = false
 
@@ -22,6 +26,8 @@ Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Upload)
 Vue.use(Row)
+Vue.use(Select)
+Vue.use(Option)
 
 new Vue({
   el: '#app',
