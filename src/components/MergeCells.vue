@@ -1,53 +1,270 @@
 <template>
-  <split-table :headData="headData" :bodyData="bodyData" @multipleData="multipleData" @editData="editData">
-    <template slot="operate" slot-scope="props">
-      <span @click="splitEdit(props.rowData)">修改</span>
-      <span @click="splitAdd(props.rowData)">新增</span>
-      <span @click="splitDel(props.rowData)">删除</span>
-    </template>
-  </split-table>
+  <div>
+    <table width='100%' border="1">
+      <thead>
+        <tr>
+          <td>一级指标</td>
+          <td>得分</td>
+          <td>二级指标</td>
+          <td>得分</td>
+          <td>三级指标</td>
+          <td>得分</td>
+        </tr>
+      </thead>
+      <tbody>
+       <tr v-for="(item,index) in tableData[0].firstLever.secondLever[0].thirdLever" :key='index'>
+         <td>1</td>
+         <td>73.56</td>
+         <td>1.1</td>
+         <td rowspan="3" v-if='tableData[0].firstLever.secondLever[0].thirdLever.length>0'>84.62</td>
+         <td v-else>84.62</td>
+         <td>{{item.name}}</td>
+         <td>{{item.score}}</td>
+       </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
-  import SplitTable from 'vue-split-table';
   export default {
-    components: { SplitTable },
-    data () {
-      return {
-         headData: ["城市", "美食", "好玩的地方"],
-      bodyData: [
-        { city: "北京", food: "北京烤鸭", fun: ["故宫", "颐和园", "长城"] },
-        {
-          city: "深圳",food: ["肠粉", "牛肉火锅"],fun: ["西冲", "华侨城", "世界之窗"]
-        },
-        {
-          city: ["重庆", "成都", "武汉"],
-          food: ["重庆老火锅","重庆烤鱼","重庆小面","成都小吃","武汉热干面"],
-          fun: ["洪崖洞", "峨眉山", "黄鹤楼"]
-        }
-      ], 
+    data(){
+      return{
+        tableData:[
+          {
+            'firstLever':{
+                'name':'1',
+                'score':'73.56',
+                'secondLever':[{
+                  'name':'1.1',
+                  'score':'84.64',
+                  'thirdLever':[{
+                    'name':'1.1.1',
+                    'score':'53.85'
+                  },{
+                    'name':'1.1.2',
+                    'score':'100.00',
+                  },{
+                    'name':'1.1.3',
+                    'score':'100.00'
+                  }]
+
+                },{
+                  'name':'1.2',
+                  'score':'74.27',
+                  'thirdLever':[{
+                      'name':'1.2.1',
+                      'score':'100.00'
+                    },{
+                      'name':'1.2.2',
+                      'score':'71.43'
+                    },{
+                      'name':'1.2.3',
+                      'score':'100.00'
+                    },{
+                      'name':'1.2.4',
+                      'score':'100.00'
+                    },{
+                      'name':'1.2.5',
+                      'score':'0.00'
+                    }]
+                },{
+                  'name':'1.3',
+                  'score':'75.44',
+                  'thirdLever':[{
+                    'name':'1.3.1',
+                    'score':'100.00'
+                  },{
+                    'name':'1.3.2',
+                    'score':'16.67'
+                  },{
+                    'name':'1.3.3',
+                    'score':'66.67'
+                  },{
+                    'name':'1.3.4',
+                    'score':'100.00'
+                  },{
+                    'name':'1.3.5',
+                    'score':'93.88'
+                  }]
+                },{
+                  'name':'1.4',
+                  'score':'37.50',
+                  'thirdLever':[{
+                    'name':'1.4.1',
+                    'score':'100.00'
+                  },{
+                    'name':'1.4.2',
+                    'score':'0.00'
+                  },{
+                    'name':'1.4.3',
+                    'score':'0.00'
+                  },{
+                    'name':'1.4.4',
+                    'score':'50.00'
+                  }]
+                }]
+            }
+          },
+          {
+            'firstLever':{
+              'name':'2',
+              'score':'82.21',
+              'secondLever':[{
+                'name':'2.1',
+                'score':'66.67',
+                'thirdLever':[{
+                  'name':'2.1.1',
+                  'score':'100.00'
+                },{
+                  'name':'2.1.2',
+                  'score':'0.00'
+                },{
+                  'name':'2.1.3',
+                  'score':'100.00'
+                }]
+              },{
+                'name':'2.2',
+                'score':'83.33',
+                'thirdLever':[{
+                  'name':'2.2.1',
+                  'score':'100.00'
+                },{
+                  'name':'2.2.2',
+                  'score':'100.00'
+                },{
+                  'name':'2.2.3',
+                  'score':'50.00'
+                }]
+              },{
+                'name':'2.3',
+                'score':'96.00',
+                'thirdLever':[{
+                  'name':'2.3.1',
+                  'score':'100.00'
+                },{
+                  'name':'2.3.2',
+                  'score':'100.00'
+                },{
+                  'name':'2.3.3',
+                  'score':'88.31'
+                },{
+                  'name':'2.3.4',
+                  'score':'95.71'
+                }]
+              },{
+                'name':'2.4',
+                'score':'87.78',
+                'thirdLever':[{
+                  'name':'2.4.1',
+                  'score':'100.00'
+                },{
+                  'name':'2.4.2',
+                  'score':'72.22'
+                },{
+                  'name':'2.4.3',
+                  'score':'100.00'
+                },{
+                  'name':'2.4.4',
+                  'score':'100.00'
+                },{
+                  'name':'2.4.5',
+                  'score':'66.22'
+                }]
+              }]
+            }
+          },
+          {
+            'firstLever':{
+              'name':'3',
+              'score':'82.21',
+              'secondLever':[{
+                'name':'3.1',
+                'score':'66.67',
+                'thirdLever':[{
+                  'name':'3.1.1',
+                  'score':'100.00'
+                },{
+                  'name':'3.1.2',
+                  'score':'0.00'
+                },{
+                  'name':'3.1.3',
+                  'score':'100.00'
+                }]
+              },{
+                'name':'3.2',
+                'score':'83.33',
+                'thirdLever':[{
+                  'name':'3.2.1',
+                  'score':'100.00'
+                },{
+                  'name':'3.2.2',
+                  'score':'100.00'
+                },{
+                  'name':'3.2.3',
+                  'score':'50.00'
+                }]
+              },{
+                'name':'3.3',
+                'score':'96.00',
+                'thirdLever':[{
+                  'name':'3.3.1',
+                  'score':'100.00'
+                },{
+                  'name':'3.3.2',
+                  'score':'100.00'
+                },{
+                  'name':'3.3.3',
+                  'score':'88.31'
+                },{
+                  'name':'3.3.4',
+                  'score':'95.71'
+                }]
+              },{
+                'name':'3.4',
+                'score':'87.78',
+                'thirdLever':[{
+                  'name':'3.4.1',
+                  'score':'100.00'
+                },{
+                  'name':'3.4.2',
+                  'score':'72.22'
+                },{
+                  'name':'3.4.3',
+                  'score':'100.00'
+                },{
+                  'name':'3.4.4',
+                  'score':'100.00'
+                },{
+                  'name':'3.4.5',
+                  'score':'66.22'
+                }]
+              }]
+            }
+          }
+        ]
       }
     },
+
+
+
     methods: {
-    splitEdit(rowData) {
-      console.log("rowData值为", rowData);
+      showList(){
+        console.log(this.tableData)
+      }
     },
-
-    editData(data) {
-      console.log("编辑所在行的值为", data);
+    mounted() {
+      this.showList()
     },
-
-    splitAdd(data) {
-      console.log("新增所在行的值为", data);
-    },
-
-    splitDel(data) {
-      console.log("删除所在行的值为", data);
-    },
-
-    multipleData(data) {
-      console.log("复选框选择的值为", data);
-    }
-    }
   }
 </script>
+
+<style scoped>
+  *{
+    margin:0;
+    padding:0;
+  }
+  table{
+    border-collapse: collapse;
+  }
+</style>
