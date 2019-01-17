@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div>动态图表页面</div>
+    <div @click="mockTest()">动态图表页面</div>
     <el-select v-model="value" placeholder="请选择" @change="selectChange(value)">
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
     </el-select>
@@ -46,11 +46,25 @@ export default {
   },
   mounted() {
     this.drawBar();
-    this.drwaPie();
+    // this.drwaPie();
     this.drawMap();
     this.drawLine();
   },
   methods: {
+    mockTest(){
+      let arg = {
+        'arr|5':[
+          {
+            'value|1-100':20,
+            // 'name|1':['央企','地方国企','外资企业','民营企业','其他企业']
+            'name|+1':['央企','地方国企','外资企业','民营企业','其他企业']
+          }
+        ]
+      }
+      let data = Mock.mock(arg);
+      console.log(data);
+      this.drwaPie(data.arr);
+    },
     selectChange(e){
         console.log(e)
         this.axios.get('https://www.baidu.com')
@@ -58,7 +72,7 @@ export default {
           console.log(res)
         })
     },
-    drwaPie() {
+    drwaPie(data) {
       let listData = [
         {
           value: 11,
@@ -82,7 +96,7 @@ export default {
         }
       ];
       let textList = [];
-      listData.map(item => {
+      data.map(item => {
         textList.push(item.name);
       });
       let option = {
@@ -117,12 +131,14 @@ export default {
             name: "企业性质",
             type: "pie",
             selectedMode: "single",
-            radius: ["40%", "60%"],
+            radius: ["30%", "60%"],
             center: ["35%", "50%"],
             label: {
               normal: {
                 position: "inner",
                 formatter: "{d}%",
+                align:'center',
+                verticalAlign:'middle',
                 textStyle: {
                   color: "#fff",
                   fontSize: 10
@@ -134,7 +150,7 @@ export default {
                 show: false
               }
             },
-            data: listData
+            data: data
           }
         ]
       };
