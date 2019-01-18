@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div @click="mockPie()">动态图表页面</div>
-    <el-select v-model="value" placeholder="请选择" @change="selectChange(value)">
+    <div>动态图表页面</div>
+    <el-select class="elSelect" v-model="value" placeholder="请选择" @change="selectChange(value)">
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
     </el-select>
     <PieChart class="pieClass" ref="pieChart"></PieChart>
@@ -217,6 +217,13 @@ export default {
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
+}
+.elSelect{
+  display: block;
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  z-index: 1000;
 }
 .pieClass {
   width: 300px;

@@ -2,7 +2,7 @@
     <div>
     <h2>测试demo</h2>
     <el-row>
-      <el-button  plain type="success">树状图demo</el-button>
+      <el-button  plain type="success" @click="goTree()">树状图demo</el-button>
       <el-button  plain type="info" @click="dynamic()">饼状图demo</el-button>
       <el-button  plain type="warning">中国地图demo</el-button>
       <el-button  plain type="danger" @click="switchDemo()">图表切换</el-button>
@@ -29,8 +29,10 @@ export default {
         },
         switchDemo(){
             this.$router.push('/switchdemo')
+        },
+        goTree(){
+            this.$router.push('/treeChart')
         }
-
     }
 }
 </script>
