@@ -16,8 +16,15 @@
          <td>1</td>
          <td>73.56</td>
          <td>1.1</td>
-         <td rowspan="3" v-if='tableData[0].firstLever.secondLever[0].thirdLever.length>0'>84.62</td>
-         <td v-else>84.62</td>
+         <td>84.62</td>
+         <td>{{item.name}}</td>
+         <td>{{item.score}}</td>
+       </tr>
+       <tr v-for="(item,index) in tableData[0].firstLever.secondLever[0].thirdLever" :key='index'>
+         <td>1</td>
+         <td>73.56</td>
+         <td>1.1</td>
+         <td>84.62</td>
          <td>{{item.name}}</td>
          <td>{{item.score}}</td>
        </tr>
