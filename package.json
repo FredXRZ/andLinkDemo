@@ -5,11 +5,12 @@
   "author": "wujian <wujian@addlinks.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --hot --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "echarts": "^4.2.0-rc.2",
     "element-ui": "^2.4.11",
     "mockjs": "^1.0.1-beta3",
