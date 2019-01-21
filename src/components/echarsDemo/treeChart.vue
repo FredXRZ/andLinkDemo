@@ -28,42 +28,42 @@ export default {
                 }
             ]
         }
-        // let data = JSON.stringify(json);
-        // console.log(data)
+        let data = JSON.stringify(json);
+        console.log(json)
         let option = {
-            tooltip: {
+          tooltip: {
             trigger: "item",
             triggerOn: "mousemove"
-        },
-        series: [
-          {
-            type: "tree",
-            data: [json],
-            left: "2%",
-            right: "2%",
-            top: "20%",
-            bottom: "8%",
-            symbol: "emptyCircle",
-            orient: "BT",
-            expandAndCollapse: true,
-            label: {
-              position: "bottom",
-              rotate: 90,
-              verticalAlign: "middle",
-              align: "right"
-            },
-            leaves: {
+          },
+          series: [
+            {
+              type: "tree",
+              data: [json],
+              left: "2%",
+              right: "2%",
+              top: "20%",
+              bottom: "8%",
+              symbol: "emptyCircle",
+              orient: "BT",
+              expandAndCollapse: true,
               label: {
-                position: "top",
+                position: "bottom",
                 rotate: 90,
                 verticalAlign: "middle",
-                align: "left"
-              }
-            },
-            animationDurationUpdate: 750
-          }
-        ]
-      };
+                align: "right"
+              },
+              leaves: {
+                label: {
+                  position: "top",
+                  rotate: 90,
+                  verticalAlign: "middle",
+                  align: "left"
+                }
+              },
+              animationDurationUpdate: 750
+            }
+          ]
+        }
        // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("treeChart"));
       myChart.setOption(option);
@@ -71,3 +71,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+#treeChart{
+  width: 1000px;
+  height: 500px;
+}
+</style>
