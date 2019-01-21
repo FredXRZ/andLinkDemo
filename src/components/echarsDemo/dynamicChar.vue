@@ -93,17 +93,20 @@ export default {
         "arr|5-10": [
           {
             "value|1-100": 10,
-            "name|+1":["北京","天津","河北", "山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","广东","广西","海南"]
+            // "name|+1":["北京","天津","河北省", "山西省","内蒙古","辽宁省","吉林省","黑龙江省","上海","江苏省","浙江省","安徽省","福建省","江西省","山东省","河南省","湖北省","湖南省","重庆省","四川省","贵州省","云南省","西藏省","陕西省","甘肃省","青海省","宁夏","新疆","广东省","广西省","海南省"]
+            "name|+1":[
+              "@province"
+            ]
           }
         ]
       }
       let data = Mock.mock("http://mapPost",arg)
-      console.log(data)
+      // console.log(data)
       this.mockPost({
         url:"http://mapPost",
         method:"GET",
         success:(res)=>{
-          // console.log(res);
+          console.log(res);
           this.$refs.mapChart.createMap(res.arr);
         }
       })
@@ -164,7 +167,7 @@ export default {
         url:"http://linePost",
         method:"GET",
         success:(res)=>{
-          console.log(res);
+          // console.log(res);
           this.$refs.lineChart.createLine(res);
         }
       })
@@ -181,7 +184,7 @@ export default {
       opt.fail = opt.fail || function(){};
       if(opt.method.toUpperCase() =="GET"){
         this.axios.get(opt.url).then(res => {
-          console.log(res);
+          // console.log(res);
           if (res.status == 200) {
              opt.success(res.data);
           }else{
@@ -199,7 +202,7 @@ export default {
       }
     },
     selectChange(e) {
-      console.log(e);
+      // console.log(e);
       this.updateChart();
     },
     async updateChart() {
