@@ -1,277 +1,187 @@
 <template>
-  <div>
-    <table width='100%' border="1">
-      <thead>
+    <table
+        cellspacing="0"
+        border="1">
+        <!-- 顶部title -->
         <tr>
-          <td>一级指标</td>
-          <td>得分</td>
-          <td>二级指标</td>
-          <td>得分</td>
-          <td>三级指标</td>
-          <td>得分</td>
+            <th>一级指标</th>
+            <th>得分</th>
+            <th>二级指标</th>
+            <th>得分</th>
+            <th>三级指标</th>
+            <th>得分</th>
         </tr>
-      </thead>
-      <tbody>
-       <tr v-for="(item,index) in tableData[0].firstLever.secondLever[0].thirdLever" :key='index'>
-         <td>1</td>
-         <td>73.56</td>
-         <td>1.1</td>
-         <td>84.62</td>
-         <td>{{item.name}}</td>
-         <td>{{item.score}}</td>
-       </tr>
-       <tr v-for="(item,index) in tableData[0].firstLever.secondLever[0].thirdLever" :key='index'>
-         <td>1</td>
-         <td>73.56</td>
-         <td>1.1</td>
-         <td>84.62</td>
-         <td>{{item.name}}</td>
-         <td>{{item.score}}</td>
-       </tr>
-      </tbody>
+        <!-- 暂无数据时显示 -->
+        <tr v-if="!tableInfo">
+                <td :colspan="6">
+                    暂无数据
+                </td>
+        </tr>
+        <!-- template不会被渲染 -->
+        <template v-for="(item,index) in tableInfo">
+            <!-- 左边跨行区域 -->
+            <tr>
+                <td :rowspan="item.secondLever.length+1+item.secondLever[index].thirdLever.length+1">{{item.name}}</td>
+                <td :rowspan="item.secondLever.length+1+item.secondLever[index].thirdLever.length+1">{{item.score}}</td>
+            </tr>
+            <!-- 中间数据 -->
+            <tr v-for="(son,index) in item.secondLever" :key="index">
+                <td>{{son.name}}</td>
+                <td>{{son.score}}</td>
+            </tr>
+            <!-- 右边数据 -->
+            <tr v-for="(child,index) in item.secondLever[index].thirdLever" :key="index">
+                <td>{{child.name}}</td>
+                <td>{{child.score}}</td>
+            </tr>
+        </template>
     </table>
-  </div>
 </template>
-
 <script>
-  export default {
-    data(){
-      return{
-        tableData:[
-          {
-            'firstLever':{
-                'name':'1',
-                'score':'73.56',
-                'secondLever':[{
-                  'name':'1.1',
-                  'score':'84.64',
-                  'thirdLever':[{
-                    'name':'1.1.1',
-                    'score':'53.85'
-                  },{
-                    'name':'1.1.2',
-                    'score':'100.00',
-                  },{
-                    'name':'1.1.3',
-                    'score':'100.00'
-                  }]
-
-                },{
-                  'name':'1.2',
-                  'score':'74.27',
-                  'thirdLever':[{
-                      'name':'1.2.1',
-                      'score':'100.00'
-                    },{
-                      'name':'1.2.2',
-                      'score':'71.43'
-                    },{
-                      'name':'1.2.3',
-                      'score':'100.00'
-                    },{
-                      'name':'1.2.4',
-                      'score':'100.00'
-                    },{
-                      'name':'1.2.5',
-                      'score':'0.00'
-                    }]
-                },{
-                  'name':'1.3',
-                  'score':'75.44',
-                  'thirdLever':[{
-                    'name':'1.3.1',
-                    'score':'100.00'
-                  },{
-                    'name':'1.3.2',
-                    'score':'16.67'
-                  },{
-                    'name':'1.3.3',
-                    'score':'66.67'
-                  },{
-                    'name':'1.3.4',
-                    'score':'100.00'
-                  },{
-                    'name':'1.3.5',
-                    'score':'93.88'
-                  }]
-                },{
-                  'name':'1.4',
-                  'score':'37.50',
-                  'thirdLever':[{
-                    'name':'1.4.1',
-                    'score':'100.00'
-                  },{
-                    'name':'1.4.2',
-                    'score':'0.00'
-                  },{
-                    'name':'1.4.3',
-                    'score':'0.00'
-                  },{
-                    'name':'1.4.4',
-                    'score':'50.00'
-                  }]
-                }]
+    export default {
+        data(){
+            return{
+                // 数据格式
+                tableInfo:[{
+                    name:'一级指标内容',
+                    score:'80',
+                    secondLever:[
+                        {
+                            name:'二级指标内容',
+                            score:'61',
+                            thirdLever:[
+                              {
+                                name:'三级指标内容',
+                                score:'40'
+                              },
+                              {
+                                name:'三级指标内容',
+                                score:'40'
+                              },
+                              {
+                                name:'三级指标内容',
+                                score:'40'
+                              }
+                            ]
+                        },
+                        {
+                            name:'二级指标内容',
+                            score:'60',
+                            thirdLever:[
+                              {
+                                name:'三级指标内容',
+                                score:'40'
+                              },
+                              {
+                                name:'三级指标内容',
+                                score:'40'
+                              },
+                              {
+                                name:'三级指标内容',
+                                score:'40'
+                              }
+                            ]
+                        },
+                        {
+                            name:'二级指标内容',
+                            score:'60',
+                            thirdLever:[
+                              {
+                                name:'三级指标内容',
+                                score:'40'
+                              },
+                              {
+                                name:'三级指标内容',
+                                score:'40'
+                              },
+                              {
+                                name:'三级指标内容',
+                                score:'40'
+                              }
+                            ]
+                        },
+                    ],
+                },
+                // {
+                //     name:'一级指标内容',
+                //     score:'80',
+                //     secondLever:[
+                //         {
+                //             name:'二级指标内容',
+                //             score:'61',
+                //             thirdLever:[
+                //               {
+                //                 name:'三级指标内容',
+                //                 score:'40'
+                //               },
+                //               {
+                //                 name:'三级指标内容',
+                //                 score:'40'
+                //               },
+                //               {
+                //                 name:'三级指标内容',
+                //                 score:'40'
+                //               }
+                //             ]
+                //         },
+                //         {
+                //             name:'二级指标内容',
+                //             score:'60',
+                //             thirdLever:[
+                //               {
+                //                 name:'三级指标内容',
+                //                 score:'40'
+                //               },
+                //               {
+                //                 name:'三级指标内容',
+                //                 score:'40'
+                //               },
+                //               {
+                //                 name:'三级指标内容',
+                //                 score:'40'
+                //               }
+                //             ]
+                //         },
+                //         {
+                //             name:'二级指标内容',
+                //             score:'60',
+                //             thirdLever:[
+                //               {
+                //                 name:'三级指标内容',
+                //                 score:'40'
+                //               },
+                //               {
+                //                 name:'三级指标内容',
+                //                 score:'40'
+                //               },
+                //               {
+                //                 name:'三级指标内容',
+                //                 score:'40'
+                //               }
+                //             ]
+                //         },
+                //     ],
+                // },
+                ]
             }
-          },
-          {
-            'firstLever':{
-              'name':'2',
-              'score':'82.21',
-              'secondLever':[{
-                'name':'2.1',
-                'score':'66.67',
-                'thirdLever':[{
-                  'name':'2.1.1',
-                  'score':'100.00'
-                },{
-                  'name':'2.1.2',
-                  'score':'0.00'
-                },{
-                  'name':'2.1.3',
-                  'score':'100.00'
-                }]
-              },{
-                'name':'2.2',
-                'score':'83.33',
-                'thirdLever':[{
-                  'name':'2.2.1',
-                  'score':'100.00'
-                },{
-                  'name':'2.2.2',
-                  'score':'100.00'
-                },{
-                  'name':'2.2.3',
-                  'score':'50.00'
-                }]
-              },{
-                'name':'2.3',
-                'score':'96.00',
-                'thirdLever':[{
-                  'name':'2.3.1',
-                  'score':'100.00'
-                },{
-                  'name':'2.3.2',
-                  'score':'100.00'
-                },{
-                  'name':'2.3.3',
-                  'score':'88.31'
-                },{
-                  'name':'2.3.4',
-                  'score':'95.71'
-                }]
-              },{
-                'name':'2.4',
-                'score':'87.78',
-                'thirdLever':[{
-                  'name':'2.4.1',
-                  'score':'100.00'
-                },{
-                  'name':'2.4.2',
-                  'score':'72.22'
-                },{
-                  'name':'2.4.3',
-                  'score':'100.00'
-                },{
-                  'name':'2.4.4',
-                  'score':'100.00'
-                },{
-                  'name':'2.4.5',
-                  'score':'66.22'
-                }]
-              }]
-            }
-          },
-          {
-            'firstLever':{
-              'name':'3',
-              'score':'82.21',
-              'secondLever':[{
-                'name':'3.1',
-                'score':'66.67',
-                'thirdLever':[{
-                  'name':'3.1.1',
-                  'score':'100.00'
-                },{
-                  'name':'3.1.2',
-                  'score':'0.00'
-                },{
-                  'name':'3.1.3',
-                  'score':'100.00'
-                }]
-              },{
-                'name':'3.2',
-                'score':'83.33',
-                'thirdLever':[{
-                  'name':'3.2.1',
-                  'score':'100.00'
-                },{
-                  'name':'3.2.2',
-                  'score':'100.00'
-                },{
-                  'name':'3.2.3',
-                  'score':'50.00'
-                }]
-              },{
-                'name':'3.3',
-                'score':'96.00',
-                'thirdLever':[{
-                  'name':'3.3.1',
-                  'score':'100.00'
-                },{
-                  'name':'3.3.2',
-                  'score':'100.00'
-                },{
-                  'name':'3.3.3',
-                  'score':'88.31'
-                },{
-                  'name':'3.3.4',
-                  'score':'95.71'
-                }]
-              },{
-                'name':'3.4',
-                'score':'87.78',
-                'thirdLever':[{
-                  'name':'3.4.1',
-                  'score':'100.00'
-                },{
-                  'name':'3.4.2',
-                  'score':'72.22'
-                },{
-                  'name':'3.4.3',
-                  'score':'100.00'
-                },{
-                  'name':'3.4.4',
-                  'score':'100.00'
-                },{
-                  'name':'3.4.5',
-                  'score':'66.22'
-                }]
-              }]
-            }
-          }
-        ]
-      }
-    },
-
-
-
-    methods: {
-      showList(){
-        console.log(this.tableData)
-      }
-    },
-    mounted() {
-      this.showList()
-    },
-  }
+        }
+    }
 </script>
-
 <style scoped>
-  *{
-    margin:0;
-    padding:0;
-  }
-  table{
-    border-collapse: collapse;
-  }
+    table{
+        margin-top: 15px;
+        width: 100%;
+        border:1px solid #e9eaec;
+        border-collapse:collapse
+    }
+    th{
+        background-color: #f8f8f9;
+    }
+    th,td{
+        padding: 5px;
+        border: 1px solid #e9eaec;
+        text-align: center;
+        vertical-align: top;
+        line-height: 30px;
+    }
 </style>
