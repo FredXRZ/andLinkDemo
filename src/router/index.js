@@ -6,6 +6,7 @@ import Upload from '@/components/Upload'
 import Start from '@/components/Start'
 import SwitchDemo from '@/components/switchDemo/switchDemo'
 import TreeChart from '@/components/echarsDemo/treeChart'
+import Test from '@/components/test'
 
 Vue.use(Router)
 
@@ -25,6 +26,11 @@ export default new Router({
       path: '/treeChart',
       name: 'TreeChart',
       component: TreeChart
+    },
+    {
+      path: '/test',
+      name: 'Test',
+      component: Test
     },
     {
       path:'/upload',
