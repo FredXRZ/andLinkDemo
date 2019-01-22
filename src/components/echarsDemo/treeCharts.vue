@@ -10,6 +10,7 @@
   </div>
 </template>
 <script>
+import Mock from "mockjs";
 import TreeChart from "./../echarts/treeChart";
 export default {
   name: "TreeCharts",
@@ -56,13 +57,13 @@ export default {
 </script>
 <style scoped>
 .tree_chart{
-  width: 1000px;
+  width: 100%;
   height: 500px;
   margin: 0 auto;
 }
 .time_axis_content{
   width: 100%;
-  height: 10px;
+  height: 3px;
   background: #358;
   position: relative;
   overflow: visible;
@@ -81,6 +82,7 @@ export default {
   transform: translateY(-50%);
   z-index: 10;
   cursor: pointer;
+  -webkit-user-select: none;
 }
 .time_axis_content>span:nth-child(1){
   left: 10%;

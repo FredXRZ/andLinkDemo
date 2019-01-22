@@ -8,7 +8,7 @@ export default {
     return {};
   },
   methods: {
-    createChart() {
+    createChart(data) {
         let json = {
             "name":"第一层",
             "id":1,
@@ -29,7 +29,6 @@ export default {
                 }
             ]
         }
-        let data = JSON.stringify(json);
         console.log(json)
         let that = this;
         let option = {

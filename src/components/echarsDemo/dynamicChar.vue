@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div>动态图表页面</div>
+    <button @click="addBar">添加</button>
     <el-select class="elSelect" v-model="value" placeholder="请选择" @change="selectChange(value)">
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
     </el-select>
@@ -8,9 +9,11 @@
     <MapChart class="mapClass" ref="mapChart"></MapChart>
     <BarChart class="barClass" ref="barChart"></BarChart>
     <LineChart class="lineClass" ref="lineChart"></LineChart>
+    <div id="addContainer"></div>
   </div>
 </template>
 <script>
+import Vue from 'vue'
 import Mock from "mockjs";
 import PieChart from "./../echarts/pieChart.vue";
 import MapChart from "./../echarts/mapChart.vue";
@@ -50,8 +53,11 @@ export default {
           label: "2019"
         }
       ],
-      value: ""
+      value: "",
     };
+  },
+  created(){
+    // this.mockBar();
   },
   mounted() {
     // this.$refs.mapChart.createMap();
@@ -111,11 +117,19 @@ export default {
         }
       })
     },
+    addBar(){
+      var Profile = Vue.extend(BarChart);
+      // 创建 Profile 实例，并挂载到一个元素上。
+      console.log(Profile)
+      new Profile().$mount('#addContainer');
+      this.mockBar();
+    },
     /**
      * 设置柱状图Mock
      */
     mockBar(){
       let arg = {
+        "id":"@id",
         "arr|31":[
           {
             "name|+1":[
@@ -136,8 +150,12 @@ export default {
         url:"http://barPost",
         method:"GET",
         success:(res)=>{
-          // console.log(res);
-           this.$refs.barChart.createChart(res.arr);
+          console.log(res);
+          let data = {
+            "id":"bar"+res.id,
+            "data":res.arr
+          }
+          // this.$refs.barChart.createChart(data);
         }
       })
     },
