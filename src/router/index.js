@@ -5,7 +5,7 @@ import DynamicChar from '@/components/echarsDemo/dynamicChar'
 import Upload from '@/components/Upload'
 import Start from '@/components/Start'
 import SwitchDemo from '@/components/switchDemo/switchDemo'
-import TreeChart from '@/components/echarsDemo/treeChart'
+import TreeCharts from '@/components/echarsDemo/treeCharts'
 import Test from '@/components/test'
 
 Vue.use(Router)
@@ -23,9 +23,9 @@ export default new Router({
       component: DynamicChar
     },
     {
-      path: '/treeChart',
-      name: 'TreeChart',
-      component: TreeChart
+      path: '/treeCharts',
+      name: 'TreeCharts',
+      component: TreeCharts
     },
     {
       path: '/test',

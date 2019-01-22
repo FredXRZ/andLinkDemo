@@ -31,7 +31,7 @@ export default {
             this.$router.push('/switchdemo')
         },
         goTree(){
-            this.$router.push('/treeChart')
+            this.$router.push('/treeCharts')
         }
     }
 }

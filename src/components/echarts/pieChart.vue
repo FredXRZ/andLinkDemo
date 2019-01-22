@@ -31,7 +31,7 @@ export default {
         }
     },
     methods:{
-        createPie(data){
+        createChart(data){
             // let listData = this.listData;
             // console.log(listData)
             if(!(data instanceof Array) || data.length==0)return;

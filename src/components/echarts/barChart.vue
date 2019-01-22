@@ -67,7 +67,7 @@ export default {
     };
   },
   methods: {
-    createBar(data) {
+    createChart(data) {
         console.log(data)
       let getName = data => {
         let arr = [];

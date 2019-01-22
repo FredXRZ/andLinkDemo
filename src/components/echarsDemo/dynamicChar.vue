@@ -81,7 +81,7 @@ export default {
         method:"GET",
         success:(res)=>{
           // console.log(res);
-          this.$refs.pieChart.createPie(res.arr);
+          this.$refs.pieChart.createChart(res.arr);
         }
       })
     },
@@ -107,7 +107,7 @@ export default {
         method:"GET",
         success:(res)=>{
           console.log(res);
-          this.$refs.mapChart.createMap(res.arr);
+          this.$refs.mapChart.createChart(res.arr);
         }
       })
     },
@@ -137,7 +137,7 @@ export default {
         method:"GET",
         success:(res)=>{
           // console.log(res);
-           this.$refs.barChart.createBar(res.arr);
+           this.$refs.barChart.createChart(res.arr);
         }
       })
     },
@@ -168,7 +168,7 @@ export default {
         method:"GET",
         success:(res)=>{
           // console.log(res);
-          this.$refs.lineChart.createLine(res);
+          this.$refs.lineChart.createChart(res);
         }
       })
     },

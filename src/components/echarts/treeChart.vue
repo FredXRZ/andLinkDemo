@@ -7,22 +7,23 @@ export default {
   data() {
     return {};
   },
-  mounted(){
-      this.createTree();
-  },
   methods: {
-    createTree() {
+    createChart() {
         let json = {
             "name":"第一层",
+            "id":1,
             "children":[
                 {
-                    "name":"第二层"
+                    "name":"第二层",
+                    "id":2
                 },
                 {
                     "name":"第二层",
+                    "id":3,
                     "children":[
                         {
-                            "name":"第三层"
+                            "name":"第三层",
+                            "id":4
                         }
                     ]
                 }
@@ -30,10 +31,14 @@ export default {
         }
         let data = JSON.stringify(json);
         console.log(json)
+        let that = this;
         let option = {
           tooltip: {
             trigger: "item",
-            triggerOn: "mousemove"
+            triggerOn: "click",
+            formatter:function(params){
+              that.$emit("treeClick",params.data)
+            }
           },
           series: [
             {
@@ -48,16 +53,21 @@ export default {
               expandAndCollapse: true,
               label: {
                 position: "bottom",
-                rotate: 90,
+                rotate: 0,//树节点文字方向
                 verticalAlign: "middle",
                 align: "right"
               },
               leaves: {
                 label: {
                   position: "top",
-                  rotate: 90,
+                  rotate: 0,
                   verticalAlign: "middle",
                   align: "left"
+                },
+                emphasis:{
+                  label:{
+                    rotate:0
+                  }
                 }
               },
               animationDurationUpdate: 750
@@ -71,9 +81,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-#treeChart{
-  width: 1000px;
-  height: 500px;
-}
-</style>

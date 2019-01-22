@@ -38,7 +38,7 @@ export default {
     };
   },
   methods: {
-    createLine(data) {
+    createChart(data) {
         // let data = this.lineDate;
         let getName = data => {
             let arr = [];

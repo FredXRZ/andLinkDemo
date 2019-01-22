@@ -11,8 +11,16 @@
                     <th>得分</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
+            <tbody v-for="(item,index) in tableInfo" :key="index">
+              <tr v-for="(val, key) in tableTimes.allRow" :key="key">
+                <td>{{item.name}}</td>
+                <td>{{item.score}}</td>
+                <td>{{item.secondLever[index].name}}</td>
+                <td>{{item.secondLever[index].score}}</td>
+                <td>{{val.name}}</td>
+                <td>{{val.score}}</td>
+              </tr>
+                <!-- <tr>
                     <td rowspan="3">上市公司治理结构对投资这决策参与权的保护程度</td>
                     <td rowspan="3">73.56</td>
                     <td rowspan="3">1.1公司治理及内控有效性</td>
@@ -27,7 +35,7 @@
                 <tr>
                     <td>1.1.3内部控制有效性</td>
                     <td>100</td>
-                </tr>
+                </tr> -->
             </tbody>
         </table>
     </div>
@@ -49,21 +57,21 @@
                             thirdLever:[
                               {
                                 name:'三级指标内容',
-                                score:'40'
+                                score:'10'
                               },
                               {
                                 name:'三级指标内容',
-                                score:'40'
+                                score:'20'
                               },
                               {
                                 name:'三级指标内容',
-                                score:'40'
+                                score:'30'
                               }
                             ]
                         },
                         {
                             name:'二级指标内容',
-                            score:'60',
+                            score:'70',
                             thirdLever:[
                               {
                                 name:'三级指标内容',
@@ -71,66 +79,69 @@
                               },
                               {
                                 name:'三级指标内容',
-                                score:'40'
+                                score:'50'
                               },
                               {
                                 name:'三级指标内容',
-                                score:'40'
+                                score:'60'
                               }
                             ]
                         },
                         {
                             name:'二级指标内容',
-                            score:'60',
+                            score:'80',
                             thirdLever:[
                               {
                                 name:'三级指标内容',
-                                score:'40'
+                                score:'70'
                               },
                               {
                                 name:'三级指标内容',
-                                score:'40'
+                                score:'80'
                               },
                               {
                                 name:'三级指标内容',
-                                score:'40'
+                                score:'90'
                               }
                             ]
                         },
                     ],
                 },
-            ]
+            ],
+            tableTimes:{
+              secondRow:[],
+              allRow:[]
+            }
       };
     },
+    mounted(){
+      this.createTable()
+    },   
     methods: {
-      arraySpanMethod({ row, column, rowIndex, columnIndex }) {
-        if (rowIndex % 2 === 0) {
-          if (columnIndex === 0) {
-            return [1, 2];
-          } else if (columnIndex === 1) {
-            return [0, 0];
+      createTable(){
+        let obj = this.tableInfo;
+        console.log(obj)
+        let len = 0;
+        let arr = [];
+        console.log(obj)
+        obj.map(item=>{
+          if(item.secondLever){
+            this.tableTimes.secondRow.push(item.secondLever.length)
+            item.secondLever.map((val,key)=>{
+              val.rowSpan = key;
+              if(val.thirdLever){
+                console.log(val.thirdLever)
+                val.thirdLever.map(value=>{
+                  arr.push(value)
+                })
+              }
+            })
           }
-        }
-      },
-
-      objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-        console.log(row)
-        console.log(column)
-        console.log(rowIndex)
-        console.log(columnIndex)
-        if (columnIndex === 0) {
-          if (rowIndex % 2 === 0) {
-            return {
-              rowspan: 2,
-              colspan: 1
-            };
-          } else {
-            return {
-              rowspan: 0,
-              colspan: 0
-            };
-          }
-        }
+        })
+        
+        console.log( this.tableTimes.secondRow)
+        console.log(arr)
+        this.tableTimes.allRow = [...arr];
       }
     }
   };
