@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import MergeCells from '@/components/MergeCells'
-import DynamicChar from '@/components/echarsDemo/dynamicChar'
 import Upload from '@/components/Upload'
-import Start from '@/components/Start'
-import SwitchDemo from '@/components/switchDemo/switchDemo'
-import TreeCharts from '@/components/echarsDemo/treeCharts'
-import AddEchart from '@/components/echarsDemo/addEchart'
-import Test from '@/components/test'
+import Start from '@/view/Start'
+import Test from '@/view/test'
+import AddEchart from '@/view/echarsDemo/addEchart'
+import DynamicChar from '@/view/echarsDemo/dynamicChar'
+import TreeCharts from '@/view/echarsDemo/treeCharts'
+import SwitchDemo from '@/view/switchDemo/switchDemo'
 
 Vue.use(Router)
 

@@ -14,10 +14,10 @@
 <script>
 import Vue from 'vue'
 import Mock from "mockjs";
-import PieChart from "./../echarts/pieChart.vue";
-import MapChart from "./../echarts/mapChart.vue";
-import BarChart from "./../echarts/barChart.vue";
-import LineChart from "./../echarts/lineChart.vue";
+import PieChart from "@/components/echarts/pieChart.vue";
+import MapChart from "@/components/echarts/mapChart.vue";
+import BarChart from "@/components/echarts/barChart.vue";
+import LineChart from "@/components/echarts/lineChart.vue";
 var pielistArr = [];
 export default {
   name: "DynamicChar",

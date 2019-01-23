@@ -11,7 +11,7 @@
 </template>
 <script>
 import Mock from "mockjs";
-import TreeChart from "./../echarts/treeChart";
+import TreeChart from "@/components/echarts/treeChart";
 export default {
   name: "TreeCharts",
   components:{
