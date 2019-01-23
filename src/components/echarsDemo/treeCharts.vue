@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TreeChart class="tree_chart" ref="treeChart" @treeClick="treeClick"></TreeChart>
+    <TreeChart class="tree_chart" :data="treeData" :chartId="treeId" ref="treeChart" @treeClick="treeClick"></TreeChart>
     <div class="time_axis_content" @click="getYear($event)">
       <span v-for="(item, index) in years" :key="index">{{item}}</span>
       <!-- <span class="first_time">2016</span>
@@ -19,11 +19,38 @@ export default {
   },
   data() {
     return {
-      years:[2016,2017,2018]
+      years:[2016,2017,2018],
+      json:{
+        "name":"第一层",
+        "id":1,
+        "children":[
+          {
+            "name":"第二层",
+            "id":2
+          },
+          {
+            "name":"第二层",
+            "id":3,
+            "children":[
+              {
+                "name":"第三层",
+                "id":4
+              }
+            ]
+          }
+        ]
+      },
+      treeData:[],
+      treeId:null
     };
   },
   mounted(){
+    this.treeData = this.json;
+    this.treeId = "tree123456789";
+    this.$nextTick(function () {
       this.$refs.treeChart.createChart();
+    })
+     
   },
   methods: {
     getYear(event){

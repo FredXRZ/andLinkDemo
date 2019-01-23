@@ -1,5 +1,5 @@
 <template>
-  <div id="mapChart"></div>
+  <div :id="chartId"></div>
 </template>
 <script>
 import chinaJson from "@/common/json/china.json";
@@ -8,16 +8,23 @@ export default {
   data() {
     return {};
   },
+  props:["data","chartId"],
+  mounted(){
+    if(this.chartId){
+      this.createChart();
+    }
+  },
   methods: {
-    createChart(data) {
+    createChart(res) {
       // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(document.getElementById("mapChart"));
+      let myChart = this.$echarts.init(document.getElementById(this.chartId));
       let name_title = "上市公司分布地图";
       let nameColor = " rgb(55, 75, 113)";
       let name_fontFamily = "等线";
       let subname_fontSize = 15;
       let name_fontSize = 18;
       let mapName = "china";
+      let data = this.data;
     //   let data = [
     //     { name: "北京", value: 177 },
     //     { name: "天津", value: 42 },

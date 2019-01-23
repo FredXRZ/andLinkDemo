@@ -8,15 +8,19 @@ import {
   Upload,
   Row,
   Select,
-  Option
+  Option,
+  Dialog,
+  Form,
+  FormItem,
+  Input
 } from 'element-ui';
 import App from './App'
 import router from './router'
 // 引入echarts
 import echarts from 'echarts'
-import axios from 'axios'
+import ajax from './common/js/request'
 
-Vue.prototype.axios = axios
+Vue.prototype.ajax = ajax
 Vue.prototype.$echarts = echarts 
 Vue.config.productionTip = false
 
@@ -28,6 +32,10 @@ Vue.use(Upload)
 Vue.use(Row)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Dialog)
+Vue.use(Form)
+Vue.use(FormItem)
+Vue.use(Input)
 
 new Vue({
   el: '#app',

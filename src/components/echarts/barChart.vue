@@ -6,10 +6,8 @@ export default {
   name: "BarChart",
   data() {
     return {
-      chartId:"",
       //模板格式
-       
-        barList:[
+       /* barList:[
         {
           name: "北京市",
           value: 100
@@ -66,18 +64,20 @@ export default {
           name: "广东省",
           value: 666
         }
-      ]
+      ]*/
     };
   },
+  props:["data","chartId"],
   mounted(){
-    this.createChart();
+    if(this.chartId){
+      this.createChart();
+    }
   },
   methods: {
     createChart(res) {
-      // console.log(res)
-      // this.chartId = res.id;
-      // console.log(this.chartId)
-      let data = this.barList;
+      console.log(this.data)
+      console.log(this.chartId)
+      let data = this.data;
       let getName = data => {
         let arr = [];
         data.map(item => {
@@ -150,7 +150,8 @@ export default {
       };
       console.log(document.getElementById(this.chartId))
       // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(this.$refs.barChar);
+      // let myChart = this.$echarts.init(this.$refs.barChar);
+      let myChart = this.$echarts.init(document.getElementById(this.chartId));
       myChart.setOption(option);
     }
   }

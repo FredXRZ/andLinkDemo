@@ -1,5 +1,5 @@
 <template>
-  <div id="treeChart"></div>
+  <div :id="chartId"></div>
 </template>
 <script>
 export default {
@@ -7,30 +7,36 @@ export default {
   data() {
     return {};
   },
+  props:["data","chartId"],
+  mounted(){
+    if(this.chartId){
+      this.createChart();
+    }
+  },
   methods: {
-    createChart(data) {
-        let json = {
-            "name":"第一层",
-            "id":1,
-            "children":[
-                {
-                    "name":"第二层",
-                    "id":2
-                },
-                {
-                    "name":"第二层",
-                    "id":3,
-                    "children":[
-                        {
-                            "name":"第三层",
-                            "id":4
-                        }
-                    ]
-                }
-            ]
-        }
-        console.log(json)
+    createChart(res) {
+        // let json = {
+        //     "name":"第一层",
+        //     "id":1,
+        //     "children":[
+        //         {
+        //             "name":"第二层",
+        //             "id":2
+        //         },
+        //         {
+        //             "name":"第二层",
+        //             "id":3,
+        //             "children":[
+        //                 {
+        //                     "name":"第三层",
+        //                     "id":4
+        //                 }
+        //             ]
+        //         }
+        //     ]
+        // }
         let that = this;
+        let data = this.data;
         let option = {
           tooltip: {
             trigger: "item",
@@ -42,7 +48,7 @@ export default {
           series: [
             {
               type: "tree",
-              data: [json],
+              data: [data],
               left: "2%",
               right: "2%",
               top: "20%",
@@ -74,7 +80,7 @@ export default {
           ]
         }
        // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(document.getElementById("treeChart"));
+      let myChart = this.$echarts.init(document.getElementById(this.chartId));
       myChart.setOption(option);
     }
   }

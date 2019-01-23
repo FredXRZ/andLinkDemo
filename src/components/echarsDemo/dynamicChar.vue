@@ -1,14 +1,13 @@
 <template>
   <div class="container">
     <div>动态图表页面</div>
-    <button @click="addBar">添加</button>
     <el-select class="elSelect" v-model="value" placeholder="请选择" @change="selectChange(value)">
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
     </el-select>
-    <PieChart class="pieClass" ref="pieChart"></PieChart>
-    <MapChart class="mapClass" ref="mapChart"></MapChart>
-    <BarChart class="barClass" ref="barChart"></BarChart>
-    <LineChart class="lineClass" ref="lineChart"></LineChart>
+    <PieChart class="pieClass" :data="pieData" :chartId="pieId" ref="pieChart"></PieChart>
+    <MapChart  class="mapClass" :data="mapData" :chartId="mapId" ref="mapChart"></MapChart>
+    <BarChart  class="barClass" :data="barData" :chartId="barId" ref="barChart"></BarChart>
+    <LineChart class="lineClass" :data="lineData" :chartId="lineId" ref="lineChart"></LineChart>
     <div id="addContainer"></div>
   </div>
 </template>
@@ -54,10 +53,15 @@ export default {
         }
       ],
       value: "",
+      barData:[],
+      barId:null,
+      lineData:[],
+      lineId:null,
+      mapData:[],
+      mapId:null,
+      pieData:[],
+      pieId:null
     };
-  },
-  created(){
-    // this.mockBar();
   },
   mounted() {
     // this.$refs.mapChart.createMap();
@@ -74,6 +78,7 @@ export default {
      */
     mockPie() {
       let arg = {
+        "id":"@id",
         "arr|5": [
           {
             "value|1-100": 20,
@@ -82,12 +87,16 @@ export default {
         ]
       }
       let data = Mock.mock("http://piePost", arg)
-      this.mockPost({
+      this.ajax({
         url:"http://piePost",
         method:"GET",
         success:(res)=>{
           // console.log(res);
-          this.$refs.pieChart.createChart(res.arr);
+          this.pieData = res.arr;
+          this.pieId = `pie${res.id}`;
+          this.$nextTick(function () {
+            this.$refs.pieChart.createChart();
+          })
         }
       })
     },
@@ -96,6 +105,7 @@ export default {
      */
     mockMap() {
       let arg = {
+        "id":"@id",
         "arr|5-10": [
           {
             "value|1-100": 10,
@@ -108,21 +118,18 @@ export default {
       }
       let data = Mock.mock("http://mapPost",arg)
       // console.log(data)
-      this.mockPost({
+      this.ajax({
         url:"http://mapPost",
         method:"GET",
         success:(res)=>{
           console.log(res);
-          this.$refs.mapChart.createChart(res.arr);
+          this.mapData = res.arr;
+          this.mapId = `map${res.id}`;
+          this.$nextTick(function () {
+            this.$refs.mapChart.createChart();
+          })
         }
       })
-    },
-    addBar(){
-      var Profile = Vue.extend(BarChart);
-      // 创建 Profile 实例，并挂载到一个元素上。
-      console.log(Profile)
-      new Profile().$mount('#addContainer');
-      this.mockBar();
     },
     /**
      * 设置柱状图Mock
@@ -146,7 +153,8 @@ export default {
         ]
       }
       let data = Mock.mock("http://barPost",arg)
-      this.mockPost({
+      let that = this;
+      this.ajax({
         url:"http://barPost",
         method:"GET",
         success:(res)=>{
@@ -155,7 +163,18 @@ export default {
             "id":"bar"+res.id,
             "data":res.arr
           }
-          // this.$refs.barChart.createChart(data);
+          console.log(this)
+          console.log(that._data)
+          this.barData = res.arr;
+          this.barId = `bar${res.id}`;
+          let id = `bar${res.id}`;
+          // this.$set(this,"barId",id);
+          // this.$set(this,"barData",res.arr);
+          console.log(this.barData)
+          console.log(this.barId)
+           this.$nextTick(function () {
+             this.$refs.barChart.createChart();
+           })
         }
       })
     },
@@ -165,6 +184,7 @@ export default {
     mockLine(){
       let arg = {
         // "years|3-10":[2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019],
+        "id":"@id",
         "years|1":["@range(2012, 2019)"],
         "list|4":[
           {
@@ -181,12 +201,16 @@ export default {
         ]
       }
       let data = Mock.mock("http://linePost",arg)
-      this.mockPost({
+      this.ajax({
         url:"http://linePost",
         method:"GET",
         success:(res)=>{
           // console.log(res);
-          this.$refs.lineChart.createChart(res);
+          this.lineData = res;
+          this.lineId = `line${res.id}`;
+          this.$nextTick(function () {
+            this.$refs.lineChart.createChart();
+          })
         }
       })
     },
