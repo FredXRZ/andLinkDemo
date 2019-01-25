@@ -145,108 +145,36 @@ export default {
   mounted() {
     // this.createTable();
     this.list = this.parseTreeToRow(this.tableInfo);
-    // let daa = this.parseTreeToRows(this.tableInfo)
     console.log(this.list);
-    // console.log(daa)
   },
   methods: {
-    parseTreeToRows(node, data = [], row = []) {
-      if (!node) {
-        data.push(row);
-      } else {
-        for (let i = 0; i < node.length; i++) {
-          const child = node[i].children;
-          const name = { value: node[i].name };
-          const cell = { value: node[i].score };
-          /******************添加的代码******************/
-          //深度克隆父亲，因为后代共用了该引用数据
-          const extendRow = [...JSON.parse(JSON.stringify(row)), name, cell];
-          console.log(extendRow);
-          if (extendRow.length === 2) {
-            //第一列
-            extendRow[0].rowspan = 1;
-            extendRow[1].rowspan = 1;
-          } else if (extendRow.length === 4) {
-            extendRow[0].rowspan = 1;
-            extendRow[1].rowspan = 1;
-            extendRow[2].rowspan = 1;
-            extendRow[3].rowspan = 1;
-          } else if (extendRow.length > 5) {
-            //将该行的最后一列的rowspan赋给上一列
-            //再将自身置为1(避免最后一列无值)
-            extendRow[extendRow.length - 6].rowspan =
-              i === 0 ? this.computeLeafCounts(node) : 0;
-            extendRow[extendRow.length - 5].rowspan =
-              i === 0 ? this.computeLeafCounts(node) : 0;
-            extendRow[extendRow.length - 4].rowspan =
-              i === 0 ? this.computeLeafCounts(node) : 0;
-            extendRow[extendRow.length - 3].rowspan =
-              i === 0 ? this.computeLeafCounts(node) : 0;
-            extendRow[extendRow.length - 2].rowspan = 1;
-            extendRow[extendRow.length - 1].rowspan = 1;
-          }
-          /******************添加的代码******************/
-          this.parseTreeToRows(child, data, extendRow);
-        }
-      }
-
-      return data;
-    },
-    computeLeafCounts(node) {
-      // console.log(node)
-      if (!node) {
-        node.rowspan = 1;
-        return 1;
-      } else {
-        let leafCount = 0;
-        for (let i = 0; i < node.length; i++) {
-          leafCount = leafCount + this.computeLeafCounts(node[i].children);
-        }
-        node.rowspan = leafCount;
-        return leafCount;
-      }
-    },
-    parseTreeToRow(node, data = [], row = [], rootNode = {}) {
+    parseTreeToRow(node, data = [], row = [],level=1) {
       if (!node.children) {
+        console.log(row)
         data.push(row);
       } else {
-        if (row.length == 0) {
-          rootNode = node;
-        }
         for (let i = 0; i < node.children.length; i++) {
           const child = node.children[i];
-          const name = { value: child.name };
-          const cell = { value: child.score };
-          console.log(child);
-          /******************添加的代码******************/
-          //深度克隆父亲，因为后代共用了该引用数据
-          const extendRow = [...JSON.parse(JSON.stringify(row)), name, cell];
-          console.log(extendRow);
-          if (extendRow.length === 2) {
-            console.log(Boolean(i === 0))
-            //第一列
-            extendRow[0].rowspan = i === 0? this.computeLeafCount(node):0;
-            extendRow[1].rowspan = i === 0? this.computeLeafCount(node):0;
-          } else if (extendRow.length > 5) {
-            //将该行的最后一列的rowspan赋给上一列
-            //再将自身置为1(避免最后一列无值)
-            // console.log(Boolean(extendRow[extendRow.length - 6].rowspan))
-            console.log(extendRow[extendRow.length - 6].rowspan)
-            extendRow[extendRow.length - 6].rowspan =
-              i === 0 ? this.computeLeafCount(node) : 0;
-            extendRow[extendRow.length - 5].rowspan =
-              i === 0 ? this.computeLeafCount(node) : 0;
-            extendRow[extendRow.length - 4].rowspan =
-              i === 0 ? this.computeLeafCount(node) : 0;
-            extendRow[extendRow.length - 3].rowspan =
-              i === 0 ? this.computeLeafCount(node) : 0;
-            extendRow[extendRow.length - 2].rowspan = 1;
-            extendRow[extendRow.length - 1].rowspan = 1;
+          console.log(child)
+          const name = {
+            value:child.name,
+            rowspan:this.computeLeafCount(child)
           }
-          /******************添加的代码******************/
-          this.parseTreeToRow(child, data, extendRow, rootNode);
+          const score = {
+            value:child.score,
+            rowspan:this.computeLeafCount(child)
+          }
+          let arr = [...row,name,score];
+          if(arr.length>5 && level>3){
+            arr[0].rowspan = 0;
+            arr[1].rowspan = 0;
+          }
+          // console.log(arr)
+          level++;
+          this.parseTreeToRow(child, data, arr,level);
         }
       }
+      console.log(level)
       return data;
     },
     computeLeafCount(node) {
