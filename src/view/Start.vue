@@ -19,7 +19,7 @@ export default {
     },
     methods:{
         mergeCells(){
-            this.$router.push('/mergecell')
+            this.$router.push('/test')
         },
         upload(){
             this.$router.push('/upload')

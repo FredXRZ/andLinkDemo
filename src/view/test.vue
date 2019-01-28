@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table>
+    <table class="table_list">
       <thead>
         <tr>
           <th>一级指标(权重%)</th>
@@ -11,53 +11,13 @@
           <th>得分</th>
         </tr>
       </thead>
-      <tbody
-        v-for="(item,index) in tableInfo.children"
-        :key="index"
-      >
-        <!-- <tr
-          v-for="(val, key) in tableTimes.allRow"
-          :key="key"
-        >
-          <td>{{item.name}}</td>
-          <td>{{item.score}}</td>
-          <td>{{item.secondLever[index].name}}</td>
-          <td>{{item.secondLever[index].score}}</td>
-          <td>{{val.name}}</td>
-          <td>{{val.score}}</td>
-        </tr> -->
-        <!-- <tr>
-                    <td rowspan="3">上市公司治理结构对投资这决策参与权的保护程度</td>
-                    <td rowspan="3">73.56</td>
-                    <td rowspan="3">1.1公司治理及内控有效性</td>
-                    <td rowspan="3">84.62</td>
-                    <td>1.1.1治理文件的制定情况</td>
-                    <td>53.85</td>
-                </tr>
-                <tr>
-                    <td>1.1.2董事长与总经理兼任情况</td>
-                    <td>100</td>
-                </tr>
-                <tr>
-                    <td>1.1.3内部控制有效性</td>
-                    <td>100</td>
-                </tr> -->
+      <tbody>
+         <tr v-for="(row, i) in list" :key="i">
+          <td v-for="(cell, j)  in row" :key="j" v-if="cell.rowspan" :rowspan="cell.rowspan">
+            <div class="cell">{{ cell.value }}</div>
+          </td>
+        </tr>
       </tbody>
-    </table>
-    <table>
-      <tr
-        v-for="(row, i) in list"
-        :key="i"
-      >
-        <td
-          v-for="(cell, j)  in row"
-          :key="j"
-          v-if="cell.rowspan"
-          :rowspan="cell.rowspan"
-        >
-          <div class="cell">{{ cell.value }}</div>
-        </td>
-      </tr>
     </table>
   </div>
 </template>
@@ -143,14 +103,16 @@ export default {
     };
   },
   mounted() {
-    // this.createTable();
     this.list = this.parseTreeToRow(this.tableInfo);
     console.log(this.list);
   },
   methods: {
-    parseTreeToRow(node, data = [], row = [],level=1) {
+    parseTreeToRow(node, data = [], row = []) {
       if (!node.children) {
-        console.log(row)
+        if(data.length!=0){
+          row[0].rowspan = 0;
+          row[1].rowspan = 0;
+        }
         data.push(row);
       } else {
         for (let i = 0; i < node.children.length; i++) {
@@ -164,21 +126,20 @@ export default {
             value:child.score,
             rowspan:this.computeLeafCount(child)
           }
-          let arr = [...row,name,score];
-          if(arr.length>5 && level>3){
-            arr[0].rowspan = 0;
-            arr[1].rowspan = 0;
+          const extendRow = [ ...JSON.parse(JSON.stringify(row)),name,score];
+          if (extendRow.length > 5) {
+            extendRow[extendRow.length - 4].rowspan = i === 0 ? this.computeLeafCount(node) : 0;
+            extendRow[extendRow.length - 3].rowspan = i === 0 ? this.computeLeafCount(node) : 0;
+            extendRow[extendRow.length - 2].rowspan = 1;
+            extendRow[extendRow.length - 1].rowspan = 1;
           }
-          // console.log(arr)
-          level++;
-          this.parseTreeToRow(child, data, arr,level);
+          this.parseTreeToRow(child, data, extendRow);
         }
       }
-      console.log(level)
+      // console.log(level)
       return data;
     },
     computeLeafCount(node) {
-      // console.log(node)
       if (!node.children) {
         node.rowspan = 1;
         return 1;
@@ -191,30 +152,6 @@ export default {
         return leafCount;
       }
     },
-    createTable() {
-      let obj = this.tableInfo;
-      console.log(obj);
-      let len = 0;
-      let arr = [];
-      obj.map(item => {
-        if (item.secondLever) {
-          this.tableTimes.secondRow.push(item.secondLever.length);
-          item.secondLever.map((val, key) => {
-            val.rowSpan = key;
-            if (val.thirdLever) {
-              console.log(val.thirdLever);
-              val.thirdLever.map(value => {
-                arr.push(value);
-              });
-            }
-          });
-        }
-      });
-
-      console.log(this.tableTimes.secondRow);
-      console.log(arr);
-      this.tableTimes.allRow = [...arr];
-    }
   }
 };
 </script>
@@ -233,7 +170,7 @@ td {
   padding: 5px;
   border: 1px solid #e9eaec;
   text-align: center;
-  vertical-align: top;
+  vertical-align: middle;
   line-height: 30px;
 }
 </style>
