@@ -13,9 +13,11 @@
       </thead>
       <tbody>
          <tr v-for="(row, i) in list" :key="i">
-          <td v-for="(cell, j)  in row" :key="j" v-if="cell.rowspan" :rowspan="cell.rowspan">
-            <div class="cell">{{ cell.value }}</div>
-          </td>
+           <template v-for="(cell, j)  in row">
+              <td :key="j" v-if="cell.rowspan" :rowspan="cell.rowspan" @click="goThirdDetail(cell)">
+                <div class="cell">{{ cell.value }}</div>
+              </td>
+           </template>
         </tr>
       </tbody>
     </table>
@@ -152,6 +154,9 @@ export default {
         return leafCount;
       }
     },
+    goThirdDetail(el){
+      console.log(el)
+    }
   }
 };
 </script>
