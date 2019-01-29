@@ -1,5 +1,5 @@
 <template>
-  <div id="mapChart"></div>
+  <div :id="chartId"></div>
 </template>
 <script>
 import chinaJson from "@/common/json/china.json";
@@ -8,16 +8,23 @@ export default {
   data() {
     return {};
   },
+  props:["data","chartId"],
+  mounted(){
+    if(this.chartId){
+      this.createChart();
+    }
+  },
   methods: {
-    createMap(data) {
+    createChart(res) {
       // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(document.getElementById("mapChart"));
+      let myChart = this.$echarts.init(document.getElementById(this.chartId));
       let name_title = "上市公司分布地图";
       let nameColor = " rgb(55, 75, 113)";
       let name_fontFamily = "等线";
       let subname_fontSize = 15;
       let name_fontSize = 18;
       let mapName = "china";
+      let data = this.data;
     //   let data = [
     //     { name: "北京", value: 177 },
     //     { name: "天津", value: 42 },
@@ -57,23 +64,28 @@ export default {
       /*获取地图数据*/
       myChart.showLoading();
       this.$echarts.registerMap(mapName, chinaJson);
+      console.log( this.$echarts.getMap(mapName))
       let mapFeatures = this.$echarts.getMap(mapName).geoJson.features;
       myChart.hideLoading();
+      //地图绘制省市的对象
       mapFeatures.forEach(function(v) {
         // 地区名称
         let name = v.properties.name;
         // 地区经纬度
         geoCoordMap[name] = v.properties.cp;
       });
+      console.log(geoCoordMap)
       let max = 480,
-        min = 9; // todo
+          min = 9; // todo
       let maxSize4Pin = 100,
-        minSize4Pin = 20;
-
+          minSize4Pin = 20;
+      //传入数据和地图数据
       let convertData = function(data) {
         let res = [];
         for (let i = 0; i < data.length; i++) {
-          let geoCoord = geoCoordMap[data[i].name];
+          let name = data[i].name;
+          console.log(name)
+          let geoCoord = geoCoordMap[name];
           if (geoCoord) {
             res.push({
               name: data[i].name,
@@ -82,6 +94,17 @@ export default {
           }
         }
         return res;
+      };
+      let handleData = function(data){
+        data.map(item=>{
+          if(item.name.indexOf("内蒙")>-1){
+            item.name = "内蒙古";
+          }else if(item.name.indexOf("省")==-1){
+            item.name = item.name.substring(0,2);
+          }
+        })
+        console.log(data)
+        return data;
       };
       let option = {
         title: {
@@ -101,7 +124,6 @@ export default {
         tooltip: {
           trigger: "item",
           formatter: function(params) {
-            // console.log(params)
             if (typeof params.value != "undefined") {
               var toolTiphtml = "";
               data.map(item => {
@@ -199,7 +221,7 @@ export default {
             map: mapName,
             geoIndex: 0,
             aspectScale: 0.75, //长宽比
-            showLegendSymbol: false, // 存在legend时显示
+            showLegendSymbol: false, // 在图例相应区域显示图例的颜色标识（系列标识的小圆点），存在 legend 组件时生效。
             label: {
               normal: {
                 show: true
@@ -211,18 +233,18 @@ export default {
                 }
               }
             },
-            roam: false,
-            itemStyle: {
+            roam: false,//是否开启鼠标缩放和平移漫游
+            itemStyle: {//地图区域的多边形 图形样式。
               normal: {
-                areaColor: "#031525",
+                areaColor: "#ff0000",
                 borderColor: "#3B5077"
               },
-              emphasis: {
+              emphasis: { //高亮状态下的多边形和标签样式。
                 areaColor: "#2B91B7"
               }
             },
             animation: true,
-            data: data
+            data: handleData(data)
           },
           {
             name: "点",

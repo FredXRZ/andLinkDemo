@@ -1,5 +1,5 @@
 <template>
-    <div id="pieChart"></div>
+    <div :id="chartId"></div>
 </template>
 <script>
 export default {
@@ -30,10 +30,17 @@ export default {
             ]
         }
     },
+    props:["data","chartId"],
+    mounted(){
+        if(this.chartId){
+            this.createChart();
+        }
+    },
     methods:{
-        createPie(data){
+        createChart(){
             // let listData = this.listData;
             // console.log(listData)
+            let data = this.data;
             if(!(data instanceof Array) || data.length==0)return;
             let textList = [];
             data.map(item => {
@@ -95,7 +102,7 @@ export default {
                 ]
             };
             // 基于准备好的dom，初始化echarts实例
-            let myChart = this.$echarts.init(document.getElementById("pieChart"));
+            let myChart = this.$echarts.init(document.getElementById(this.chartId));
             myChart.setOption(option);
             // this.$emit('createPie');
         }

@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import MergeCells from '@/components/MergeCells'
-import DynamicChar from '@/components/echarsDemo/dynamicChar'
 import Upload from '@/components/Upload'
-import Start from '@/components/Start'
-import SwitchDemo from '@/components/switchDemo/switchDemo'
-import TreeChart from '@/components/echarsDemo/treeChart'
-import Select from '@/components/Select'
-import AnchorSkip from '@/components/anchorSkip'
+import Start from '@/view/Start'
+import Test from '@/view/test'
+import AddEchart from '@/view/echarsDemo/addEchart'
+import DynamicChar from '@/view/echarsDemo/dynamicChar'
+import TreeCharts from '@/view/echarsDemo/treeCharts'
+import SwitchDemo from '@/view/switchDemo/switchDemo'
 
 Vue.use(Router)
 
@@ -24,9 +24,19 @@ export default new Router({
       component: DynamicChar
     },
     {
-      path: '/treeChart',
-      name: 'TreeChart',
-      component: TreeChart
+      path: '/treeCharts',
+      name: 'TreeCharts',
+      component: TreeCharts
+    },
+    {
+      path: '/addEchart',
+      name: 'AddEchart',
+      component: AddEchart
+    },
+    {
+      path: '/test',
+      name: 'Test',
+      component: Test
     },
     {
       path:'/upload',
