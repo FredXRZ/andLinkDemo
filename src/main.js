@@ -8,7 +8,10 @@ import {
   Upload,
   Row,
   Select,
-  Option
+  Option,
+  Radio,
+  RadioGroup,
+  RadioButton,
 } from 'element-ui';
 import App from './App'
 import router from './router'
@@ -28,6 +31,9 @@ Vue.use(Upload)
 Vue.use(Row)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Radio)
+Vue.use(RadioGroup)
+Vue.use(RadioButton)
 
 new Vue({
   el: '#app',

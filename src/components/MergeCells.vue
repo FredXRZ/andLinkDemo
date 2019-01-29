@@ -21,7 +21,7 @@
         <template v-for="(item,index) in tableInfo">
             <!-- 左边跨行区域 -->
             <tr>
-                <td :rowspan="item.secondLever.length+1+item.secondLever[index].thirdLever.length+1">{{item.name}}</td>
+                <td @click="handerClick()" :rowspan="item.secondLever.length+1+item.secondLever[index].thirdLever.length+1">{{item.name}}</td>
                 <td :rowspan="item.secondLever.length+1+item.secondLever[index].thirdLever.length+1">{{item.score}}</td>
             </tr>
             <!-- 中间数据 -->
@@ -163,6 +163,11 @@
                 //     ],
                 // },
                 ]
+            }
+        },
+        methods:{
+            handerClick(){
+                this.$router.push('/select')
             }
         }
     }

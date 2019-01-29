@@ -6,6 +6,8 @@ import Upload from '@/components/Upload'
 import Start from '@/components/Start'
 import SwitchDemo from '@/components/switchDemo/switchDemo'
 import TreeChart from '@/components/echarsDemo/treeChart'
+import Select from '@/components/Select'
+import AnchorSkip from '@/components/anchorSkip'
 
 Vue.use(Router)
 
@@ -40,6 +42,16 @@ export default new Router({
       path:'/switchdemo',
       name:'SwitchDemo',
       component:SwitchDemo
+    },
+    {
+      path:'/select',
+      name:'Select',
+      component:Select
+    },
+    {
+      path:'/skip',
+      name:'Skip',
+      component:AnchorSkip
     },
     {
       path:'/',
