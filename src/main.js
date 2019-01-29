@@ -15,6 +15,7 @@ import {
   Dialog,
   Form,
   FormItem,
+  Checkbox,
   Input
 } from 'element-ui';
 import App from './App'
@@ -39,6 +40,7 @@ Vue.use(Dialog)
 Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Input)
+Vue.use(Checkbox)
 
 new Vue({
   el: '#app',

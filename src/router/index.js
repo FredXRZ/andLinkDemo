@@ -4,10 +4,13 @@ import MergeCells from '@/components/MergeCells'
 import Upload from '@/components/Upload'
 import Start from '@/view/Start'
 import Test from '@/view/test'
+import Select from '@/components/Select'
+import AnchorSkip from '@/components/anchorSkip'
 import AddEchart from '@/view/echarsDemo/addEchart'
 import DynamicChar from '@/view/echarsDemo/dynamicChar'
 import TreeCharts from '@/view/echarsDemo/treeCharts'
 import SwitchDemo from '@/view/switchDemo/switchDemo'
+import Login from '@/view/Login/Login'
 
 Vue.use(Router)
 
@@ -62,6 +65,11 @@ export default new Router({
       path:'/skip',
       name:'Skip',
       component:AnchorSkip
+    },
+    {
+      path:'/login',
+      name:'Login',
+      component:Login
     },
     {
       path:'/',
