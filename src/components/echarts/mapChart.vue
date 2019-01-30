@@ -64,7 +64,7 @@ export default {
       /*获取地图数据*/
       myChart.showLoading();
       this.$echarts.registerMap(mapName, chinaJson);
-      console.log( this.$echarts.getMap(mapName))
+      // console.log( this.$echarts.getMap(mapName))
       let mapFeatures = this.$echarts.getMap(mapName).geoJson.features;
       myChart.hideLoading();
       //地图绘制省市的对象
@@ -74,7 +74,6 @@ export default {
         // 地区经纬度
         geoCoordMap[name] = v.properties.cp;
       });
-      console.log(geoCoordMap)
       let max = 480,
           min = 9; // todo
       let maxSize4Pin = 100,
@@ -84,7 +83,6 @@ export default {
         let res = [];
         for (let i = 0; i < data.length; i++) {
           let name = data[i].name;
-          console.log(name)
           let geoCoord = geoCoordMap[name];
           if (geoCoord) {
             res.push({
@@ -103,7 +101,6 @@ export default {
             item.name = item.name.substring(0,2);
           }
         })
-        console.log(data)
         return data;
       };
       let option = {
@@ -267,7 +264,6 @@ export default {
                   fontSize: 9
                 },
                 formatter: function(params) {
-                  console.log(params);
                   if (params.value) {
                     return params.value[2];
                   }

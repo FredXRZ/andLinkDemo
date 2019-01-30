@@ -5,6 +5,7 @@
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
     </el-select>
     <PieChart class="pieClass" :data="pieData" :chartId="pieId" ref="pieChart"></PieChart>
+    <AreaChart class="areaClass"  ref="areaChart"></AreaChart>
     <MapChart  class="mapClass" :data="mapData" :chartId="mapId" ref="mapChart"></MapChart>
     <BarChart  class="barClass" :data="barData" :chartId="barId" ref="barChart"></BarChart>
     <LineChart class="lineClass" :data="lineData" :chartId="lineId" ref="lineChart"></LineChart>
@@ -18,6 +19,7 @@ import PieChart from "@/components/echarts/pieChart.vue";
 import MapChart from "@/components/echarts/mapChart.vue";
 import BarChart from "@/components/echarts/barChart.vue";
 import LineChart from "@/components/echarts/lineChart.vue";
+import AreaChart from "@/components/echarts/areachart.vue";
 var pielistArr = [];
 export default {
   name: "DynamicChar",
@@ -25,7 +27,8 @@ export default {
     PieChart,
     MapChart,
     BarChart,
-    LineChart
+    LineChart,
+    AreaChart
   },
   data() {
     return {
@@ -79,7 +82,7 @@ export default {
     mockPie() {
       let arg = {
         "id":"@id",
-        "arr|5": [
+        "arr|2-5": [
           {
             "value|1-100": 20,
             "name|+1": ["央企", "地方国企", "外资企业", "民营企业", "其他企业"]
@@ -122,7 +125,6 @@ export default {
         url:"http://mapPost",
         method:"GET",
         success:(res)=>{
-          console.log(res);
           this.mapData = res.arr;
           this.mapId = `map${res.id}`;
           this.$nextTick(function () {
@@ -163,15 +165,11 @@ export default {
             "id":"bar"+res.id,
             "data":res.arr
           }
-          console.log(this)
-          console.log(that._data)
           this.barData = res.arr;
           this.barId = `bar${res.id}`;
           let id = `bar${res.id}`;
           // this.$set(this,"barId",id);
           // this.$set(this,"barData",res.arr);
-          console.log(this.barData)
-          console.log(this.barId)
            this.$nextTick(function () {
              this.$refs.barChart.createChart();
            })
@@ -214,35 +212,6 @@ export default {
         }
       })
     },
-    /**
-     * Mock请求
-     */
-    mockPost(opt) {
-      opt = opt || {};
-      opt.method = opt.method.toUpperCase() || "POST";
-      opt.url = opt.url || "";
-      opt.data = opt.data || null;
-      opt.success = opt.success || function(){};
-      opt.fail = opt.fail || function(){};
-      if(opt.method.toUpperCase() =="GET"){
-        this.axios.get(opt.url).then(res => {
-          // console.log(res);
-          if (res.status == 200) {
-             opt.success(res.data);
-          }else{
-            opt.fail(res);
-          }
-        })
-      }else if(opt.method.toUpperCase() =="POST"){
-        this.axios.post(opt.url,opt.data).then(res => {
-          if (res.status == 200) {
-            opt.success(res.data);
-          }else{
-            opt.fail(res)
-          }
-        })
-      }
-    },
     selectChange(e) {
       // console.log(e);
       this.updateChart();
@@ -271,7 +240,11 @@ export default {
   z-index: 1000;
 }
 .pieClass {
-  width: 300px;
+  width: 400px;
+  height: 300px;
+}
+.areaClass{
+  width: 400px;
   height: 300px;
 }
 .mapClass {
