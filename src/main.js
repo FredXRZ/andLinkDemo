@@ -16,7 +16,7 @@ import {
   Form,
   FormItem,
   Checkbox,
-  Input
+  Input,
 } from 'element-ui';
 import App from './App'
 import router from './router'
@@ -41,6 +41,21 @@ Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Input)
 Vue.use(Checkbox)
+
+
+router.beforeEach((to, from, next) => {
+  //NProgress.start();
+  if (to.path == '/login') {
+    sessionStorage.removeItem('userName');
+  }
+  // let mobile = JSON.parse(sessionStorage.getItem('mobile'));
+  let mobile = sessionStorage.getItem("userName");
+  if (!mobile && to.path != '/login') {
+      next({ path: '/login' })
+  } else {
+    next()
+  }
+})
 
 new Vue({
   el: '#app',

@@ -9,6 +9,9 @@
       <el-button @click="mergeCells()">合并单元格demo</el-button>
       <el-button  plain type="primary" @click="upload()">文件批量上传demo</el-button>
     </el-row>
+    <span class='login-out' @click='loginOut()'>
+        <img src='../assets/LoginPage/loginout.png' alt='' />
+    </span>
     </div>
 </template>
 <script>
@@ -35,7 +38,26 @@ export default {
         },
         goAdd(){
             this.$router.push('/addEchart')
+        },
+        loginOut(){
+            // sessionStorage.removeItem('userName');
+            this.$router.push('/login')
         }
     }
 }
 </script>
+
+<style scoped>
+
+    .login-out{
+        display:block;
+        width:24px;
+        height:24px;
+        margin:100px auto;
+        cursor:pointer;
+    }
+    .login-out>img{
+        width:100%;
+        height:100%
+    }
+</style>
