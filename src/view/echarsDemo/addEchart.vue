@@ -236,7 +236,7 @@ export default {
     }
     .all_chart{
         width: 400px;
-        height: 300px;
+        height: 340px;
     }
     .barClass{
         width: 100%;

@@ -75,8 +75,6 @@ export default {
   },
   methods: {
     createChart(res) {
-      console.log(this.data)
-      console.log(this.chartId)
       let data = this.data;
       let getName = data => {
         let arr = [];
@@ -148,7 +146,6 @@ export default {
           }
         ]
       };
-      console.log(document.getElementById(this.chartId))
       // 基于准备好的dom，初始化echarts实例
       // let myChart = this.$echarts.init(this.$refs.barChar);
       let myChart = this.$echarts.init(document.getElementById(this.chartId));
