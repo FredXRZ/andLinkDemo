@@ -5,7 +5,7 @@
       </div>
       <div class="login-box">
           <div class="user-name">
-              <span class="iconfont icon-yonghu"></span>
+              <span class="iconfont icon-yonghu" @click="getMsg()"></span>
               <el-input v-model="userName" placeholder="请输入用户名" @blur="checkUserName()"></el-input>
           </div>
           <div class="user-pwd">
@@ -65,6 +65,16 @@ export default {
     },
 
 
+    getMsg(){
+      this.ajax({
+        url:'/api/login',
+        method:'GET',
+        success:(res)=>{
+          console.log(res)
+        }
+      })
+    },
+
     //登录系统
     loginSystem(){
       if(!/^1(3|4|5|7|8)\d{9}$/.test(this.userName)){
@@ -98,36 +108,52 @@ export default {
       }else{
         that.clearCookie();
       }
-
-      axios.post('http://localhost:3000/api/login',{
-        user_name:this.userName,
-        user_pwd:this.userPwd,
-        verificationCode:this.verificationCode,
-        verificationCodeId:''
-      }).then(res=>{
-        if(res.data.status == 'SUCCESS'){
-          Message({
-            type:'success',
-            message:res.data.message,
-            center:true
-          });
-          let mobile = sessionStorage.setItem("userName",this.userName)
+      let mobile = sessionStorage.setItem("userName",this.userName)
           this.$router.push({
             path:'/',
           })
-          //是否记住密码
-          // if(this.checked){
-          //   this.userName = sessionStorage.getItem("userName");
-          // }
-        }else{
-          Message({
-            type:'error',
-            message:res.data.message,
-            center:true
-          })
-        }
-        
+      Message({
+        type:'success',
+        message:'登录成功！',
+        center:true
       })
+      /**
+       * 等正式接口出来后打开
+       */
+        //发送post请求
+      // this.ajax({
+      //   url:'http://localhost:3000/api/login',
+      //   method:'POST',
+      //   data:{
+      //     user_name:this.userName,
+      //     user_pwd:this.userPwd,
+      //     verificationCode:this.verificationCode,
+      //     verificationCodeId:''
+      //   },
+      //   success:(res)=>{
+      //       if(res.status == 'SUCCESS'){
+      //         Message({
+      //           type:'success',
+      //           message:res.message,
+      //           center:true
+      //         });
+      //         let mobile = sessionStorage.setItem("userName",this.userName)
+      //         this.$router.push({
+      //           path:'/',
+      //         })
+      //         //是否记住密码
+      //         // if(this.checked){
+      //         //   this.userName = sessionStorage.getItem("userName");
+      //         // }
+      //       }else{
+      //         Message({
+      //           type:'error',
+      //           message:res.message,
+      //           center:true
+      //         })
+      //       }
+      //     }
+      // })
     },
 
     //设置cookie

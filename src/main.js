@@ -23,6 +23,7 @@ import router from './router'
 // 引入echarts
 import echarts from 'echarts'
 import ajax from './common/js/request'
+import './mock'
 
 Vue.prototype.ajax = ajax
 Vue.prototype.$echarts = echarts 
