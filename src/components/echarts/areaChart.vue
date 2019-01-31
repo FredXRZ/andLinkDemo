@@ -1,19 +1,57 @@
 <template>
-    <div id="areaChart"></div>
+    <div :id="chartId"></div>
 </template>
 <script>
 export default {
     name:"AreaChart",
     data(){
         return {
-
+            areaInfo:{
+                years:["2013","2014","2015","2016","2017"],
+                list:[
+                    {
+                        name:"地方企业",
+                        type:"line",
+                        // stack: "总量", //数据堆叠，同个类目轴上系列配置相同的stack值后，后一个系列的值会在前一个系列的值上相加。
+                        areaStyle: {
+                            normal: {
+                            //    opacity:0.5
+                            }
+                        },
+                        data:[200, 232, 180, 450, 590]
+                    },
+                     {
+                        name:"外资企业",
+                        type:"line",
+                        areaStyle: {
+                            normal: {
+                            //    opacity:0.5
+                            }
+                        },
+                        data:[400, 392, 400, 350, 300]
+                    }
+                ]
+            }
         }
     },
+    props:["data","chartId"],
     mounted(){
         this.createChart();
     },
     methods:{
         createChart(){
+            let allColors = [
+                "#005ED7","#5FA9FF","#59CCFF","#13C2C2","#27A97D",
+                "#4AFABF","#00EA8F","#FFCE31","#FF8533","#FD8D76"
+            ];
+            let data = this.data;
+            let getNameList = data =>{
+                let nameList = [];
+                data.map(item=>{
+                    nameList.push(item.name)
+                })
+                return nameList;
+            }
             let option = {
                 // title: {
                 //     text: "堆叠区域图"
@@ -22,7 +60,9 @@ export default {
                     trigger: "axis"
                 },
                 legend: {
-                    data:["邮件营销","联盟广告","视频广告","直接访问","搜索引擎"]
+                    icon:"rect",
+                    show:true, //图例组件是否显示
+                    data:getNameList(data.list)
                 },
                 // toolbox: {
                 //     feature: {
@@ -33,23 +73,23 @@ export default {
                     left: "3%",
                     right: "4%",
                     bottom: "3%",
-                    containLabel: true
+                    containLabel: true //grid 区域是否包含坐标轴的刻度标签。
                 },
                 xAxis : [
                     {
                         type : "category",
-                        boundaryGap : true,
+                        boundaryGap : true, //坐标轴两边留白策略，类目轴和非类目轴的设置和表现不一样。boolean, Array
                         offset:0,
                         axisLabel:{
                             color:"#333"
                         },
                         axisLine:{
-                            show:false
+                            show:false  // 坐标轴是否显示
                         },
                         axisTick:{
-                            show:false
+                            show:false //坐标轴刻度线是否显示
                         },
-                        data : ["周一","周二","周三","周四","周五","周六","周日"]
+                        data : data.years
                     }
                 ],
                 yAxis : [
@@ -59,13 +99,13 @@ export default {
                             color:"#333"
                         },
                         axisLine:{
-                            show:false
+                            show:false  // 坐标轴是否显示
                         },
                         axisTick:{
-                            show:false
+                            show:false //坐标轴刻度线是否显示
                         },
                         splitLine:{
-                            show:true,
+                            show:true, //网格线开关
                             lineStyle:{
                                 type:"dashed",
                                 color:"#C0CFDB"
@@ -73,67 +113,10 @@ export default {
                         },
                     }
                 ],
-                series : [
-                    {
-                        name:"邮件营销",
-                        type:"line",
-                        stack: "总量",
-                        areaStyle: {
-                            normal: {
-                                color:{
-                                    type: 'linear',
-                                    x: 0,
-                                    y: 0,
-                                    x2: 0,
-                                    y2: 1,
-                                    colorStops: [{
-                                        offset: 0, color: 'red' // 0% 处的颜色
-                                    }, {
-                                        offset: 1, color: 'blue' // 100% 处的颜色
-                                    }],
-                                    global: false // 缺省为 false
-                                }
-                            }
-                        },
-                        data:[120, 132, 101, 134, 90, 230, 210]
-                    },
-                    {
-                        name:"联盟广告",
-                        type:"line",
-                        stack: "总量",
-                        areaStyle: {normal: {}},
-                        data:[220, 182, 191, 234, 290, 330, 310]
-                    },
-                    {
-                        name:"视频广告",
-                        type:"line",
-                        stack: "总量",
-                        areaStyle: {normal: {}},
-                        data:[150, 232, 201, 154, 190, 330, 410]
-                    },
-                    {
-                        name:"直接访问",
-                        type:"line",
-                        stack: "总量",
-                        areaStyle: {normal: {}},
-                        data:[320, 332, 301, 334, 390, 330, 320]
-                    },
-                    {
-                        name:"搜索引擎",
-                        type:"line",
-                        stack: "总量",
-                        label: {
-                            normal: {
-                                show: true,
-                                position: "top"
-                            }
-                        },
-                        areaStyle: {normal: {}},
-                        data:[820, 932, 901, 934, 1290, 1330, 1320]
-                    }
-                ]
+                color:allColors,
+                series : data.list
             };
-            let myChart = this.$echarts.init(document.getElementById("areaChart"));
+            let myChart = this.$echarts.init(document.getElementById(this.chartId));
             myChart.setOption(option);
         }
     }

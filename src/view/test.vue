@@ -21,6 +21,7 @@
         </tr>
       </tbody>
     </table>
+    <button @click="testAjax">测试ajax</button>
   </div>
 </template>
 
@@ -106,7 +107,7 @@ export default {
   },
   mounted() {
     this.list = this.parseTreeToRow(this.tableInfo);
-    console.log(this.list);
+    // console.log(this.list);
   },
   methods: {
     parseTreeToRow(node, data = [], row = []) {
@@ -119,7 +120,7 @@ export default {
       } else {
         for (let i = 0; i < node.children.length; i++) {
           const child = node.children[i];
-          console.log(child)
+          // console.log(child)
           const name = {
             value:child.name,
             rowspan:this.computeLeafCount(child)
@@ -156,6 +157,21 @@ export default {
     },
     goThirdDetail(el){
       console.log(el)
+    },
+    testAjax(){
+      let data={
+       "auction_status":1,
+       "current_page":1,
+       "page_size":15,
+      }
+      this.ajax({
+        url:"https://d.upmi.com.cn/api-auction/gw/getAuctionProductListByStatus",
+        method:"post",
+        // data:data,
+        success:function(res){
+          console.log(res)
+        }
+      })
     }
   }
 };
