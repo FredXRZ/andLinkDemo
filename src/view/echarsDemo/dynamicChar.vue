@@ -5,8 +5,8 @@
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
     </el-select>
     <PieChart class="pieClass" :data="pieData" :chartId="pieId" ref="pieChart"></PieChart>
-    <AreaChart class="areaClass"  ref="areaChart"></AreaChart>
-    <MapChart  class="mapClass" :data="mapData" :chartId="mapId" ref="mapChart"></MapChart>
+    <AreaChart class="areaClass" :data="areaData" :chartId="areaId"  ref="areaChart"></AreaChart>
+    <MapChart  class="mapClass"  :data="mapData" :chartId="mapId" ref="mapChart"></MapChart>
     <BarChart  class="barClass" :data="barData" :chartId="barId" ref="barChart"></BarChart>
     <LineChart class="lineClass" :data="lineData" :chartId="lineId" ref="lineChart"></LineChart>
     <div id="addContainer"></div>
@@ -63,7 +63,9 @@ export default {
       mapData:[],
       mapId:null,
       pieData:[],
-      pieId:null
+      pieId:null,
+      areaData:[],
+      areaId:null
     };
   },
   mounted() {
@@ -74,8 +76,44 @@ export default {
     this.mockPie();
     this.mockBar();
     this.mockLine();
+    this.mockArea();
   },
   methods: {
+    /**
+     * 设置面积图Mock
+     */
+    mockArea(){
+      let arg = {
+        "id":"@id",
+        "years|1":["@range(2013, 2018)"],
+        "list|2":[
+          {
+            "name|+1":[
+              "地方企业","外资企业",
+            ],
+            "type":"line",
+            // "stack":"总量",
+            "areaStyle": {normal:{}},
+            "data|5":[
+              "@integer(0, 600)"
+            ]
+          }
+        ]
+      }
+      let data = Mock.mock("http://areaPost",arg)
+       this.ajax({
+        url:"http://areaPost",
+        method:"GET",
+        success:(res)=>{
+          console.log(res);
+          this.areaData = res;
+          this.areaId = `area${res.id}`;
+          this.$nextTick(function () {
+            this.$refs.areaChart.createChart();
+          })
+        }
+      })
+    },
     /**
      * 设置饼图Mock
      */
@@ -191,7 +229,7 @@ export default {
               "上市公司信息披露对投资者知情权的保护状况得分","上市公司经营活动对投资者投资收益权的保护状况得分"
             ],
             "type":"line",
-            "stack":"总量",
+            // "stack":"总量",
             "data|7":[
               "@integer(0, 100)"
             ]
@@ -203,7 +241,7 @@ export default {
         url:"http://linePost",
         method:"GET",
         success:(res)=>{
-          // console.log(res);
+          console.log(res);
           this.lineData = res;
           this.lineId = `line${res.id}`;
           this.$nextTick(function () {

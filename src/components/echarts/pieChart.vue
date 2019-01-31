@@ -45,18 +45,10 @@ export default {
                 "#005ED7","#5FA9FF","#59CCFF","#13C2C2","#27A97D",
                 "#4AFABF","#00EA8F","#FFCE31","#FF8533","#FD8D76"
             ];
-            let colors = [];
             if(!(data instanceof Array) || data.length==0)return;
             data.map(item => {
                 textList.push(item.name);
             });
-            for(let i=0;i<data.length;i++){
-                let len = allColors.length;
-                let randomIndex = Math.floor(Math.random()*len);
-                let color = allColors.splice(randomIndex,1)[0];
-                colors.push(color);
-            }
-            console.log(colors)
             let option = {
                 tooltip: {
                     trigger: "item",
@@ -77,6 +69,7 @@ export default {
                     itemGap:8,
                     show:true
                 },
+                color:allColors,
                 series: [
                     {
                         name: "企业性质",
@@ -84,7 +77,6 @@ export default {
                         selectedMode: false,
                         radius: ["25%", "40%"],
                         center: ["50%", "60%"],
-                        color:colors,
                         label: {
                             normal: {
                                 position: "outside",
