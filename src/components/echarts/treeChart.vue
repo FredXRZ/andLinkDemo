@@ -60,14 +60,15 @@ export default {
                 position: "bottom",
                 rotate: 0,//树节点文字方向
                 verticalAlign: "middle",
-                align: "right"
+                align: "center",
+                
               },
               leaves: {
                 label: {
                   position: "top",
                   rotate: 0,
                   verticalAlign: "middle",
-                  align: "left"
+                  align: "center"
                 },
                 emphasis:{
                   label:{

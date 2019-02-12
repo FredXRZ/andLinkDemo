@@ -29,7 +29,7 @@
     </div>
 </template>
 <script>
-import '../../assets/font_j3qa801yzi7/iconfont.css';
+import '../../assets/font_7uobeu4vjs3/iconfont.css';
 import {Message} from 'element-ui';
 import axios from 'axios'
 export default {

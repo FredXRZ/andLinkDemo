@@ -11,6 +11,7 @@ import DynamicChar from '@/view/echarsDemo/dynamicChar'
 import TreeCharts from '@/view/echarsDemo/treeCharts'
 import SwitchDemo from '@/view/switchDemo/switchDemo'
 import Login from '@/view/Login/Login'
+import QuatoDetails from '@/view/dataAnalysis/quotaDetails'
 
 Vue.use(Router)
 
@@ -70,6 +71,11 @@ export default new Router({
       path:'/login',
       name:'Login',
       component:Login
+    },
+    {
+      path:'/quotadetails',
+      name:'QuatoDetails',
+      component:QuatoDetails
     },
     {
       path:'/',
